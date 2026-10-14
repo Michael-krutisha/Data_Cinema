@@ -1,50 +1,55 @@
 @startuml
-' Настройка стиля отображения связей и сущностей
+' Настройка стиля отображения
 hide circle
 skinparam linetype ortho
 skinparam monochrome false
 skinparam shadowing false
 
 entity "Movies" as movies {
-  * **movie_id** : PK
-  title : TEXT
-  genre : TEXT
-  duration : INTEGER
-  age_rating : TEXT
+  * **movie_id** : int (PK)
+  --
+  title : str
+  genre : str
+  duration : int
+  age_rating : str
 }
 
 entity "Halls" as halls {
-  * **hall_id** : PK
-  name : TEXT
-  rows_count : INTEGER
-  seats_per_row : INTEGER
+  * **hall_id** : int (PK)
+  --
+  name : str
+  rows_count : int
+  seats_per_row : int
 }
 
 entity "User" as user {
-  * **user_id** : PK
-  username : TEXT
-  password : TEXT
-  role : TEXT
+  * **user_id** : int (PK)
+  --
+  username : str
+  password : str
+  role : str
 }
 
 entity "Sessions" as sessions {
-  * **session_id** : PK
-  * **movie_id** : FK
-  * **hall_id** : FK
-  date_time : TEXT
-  ticket_price : REAL
+  * **session_id** : int (PK)
+  --
+  * **movie_id** : int (FK)
+  * **hall_id** : int (FK)
+  date_time : str
+  ticket_price : int
 }
 
 entity "Tickets" as tickets {
-  * **ticket_id** : PK
-  * **session_id** : FK
-  * **user_id** : FK
-  row_number : INTEGER
-  seat_number : INTEGER
-  payment_status : TEXT
+  * **ticket_id** : int (PK)
+  --
+  * **session_id** : int (FK)
+  * **user_id** : int (FK)
+  row_number : int
+  seat_number : int
+  payment_status : str
 }
 
-' Определение связей "Один ко Многим" (1:N) строго по твоей схеме
+' Определение связей "Один ко Многим" (1:N)
 movies ||--|{ sessions
 halls  ||--|{ sessions
 user   ||--|{ tickets
