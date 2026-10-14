@@ -28,15 +28,15 @@
 ## Диаграмма Use Case
 Реализовано с помощью PlantUML:
 
-![Моя Диаграмма](docs/Use-case.png)
+![Моя Диаграмма](docs/diagrams/Use-case.png)
 
 ## Блок схема (1). Процесс покупки билета
 Реализовано с помощью PlantUML:
 
-![Моя Диаграмма](docs/blok-cxema1.png)
+![Моя Диаграмма](docs/diagrams/blok-cxema1.png)
 
 
 ## Блок схема (2). Регастрация пользователя
 Реализовано с помощью PlantUML:
 
-![Моя Диаграмма](docs/blok-cxema2.png)
+![Моя Диаграмма](docs/diagrams/blok-cxema2.png)
