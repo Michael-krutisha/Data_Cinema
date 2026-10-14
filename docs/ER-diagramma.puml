@@ -1,0 +1,53 @@
+@startuml
+' Настройка стиля отображения связей и сущностей
+hide circle
+skinparam linetype ortho
+skinparam monochrome false
+skinparam shadowing false
+
+entity "Movies" as movies {
+  * **movie_id** : PK
+  title : TEXT
+  genre : TEXT
+  duration : INTEGER
+  age_rating : TEXT
+}
+
+entity "Halls" as halls {
+  * **hall_id** : PK
+  name : TEXT
+  rows_count : INTEGER
+  seats_per_row : INTEGER
+}
+
+entity "User" as user {
+  * **user_id** : PK
+  username : TEXT
+  password : TEXT
+  role : TEXT
+}
+
+entity "Sessions" as sessions {
+  * **session_id** : PK
+  * **movie_id** : FK
+  * **hall_id** : FK
+  date_time : TEXT
+  ticket_price : REAL
+}
+
+entity "Tickets" as tickets {
+  * **ticket_id** : PK
+  * **session_id** : FK
+  * **user_id** : FK
+  row_number : INTEGER
+  seat_number : INTEGER
+  payment_status : TEXT
+}
+
+' Определение связей "Один ко Многим" (1:N) строго по твоей схеме
+movies ||--|{ sessions
+halls  ||--|{ sessions
+user   ||--|{ tickets
+sessions ||--|{ tickets
+
+@enduml
