@@ -40,3 +40,7 @@
 Реализовано с помощью PlantUML:
 
 ![Моя Диаграмма](docs/diagrams/blok-cxema2.png)
+
+## ER-Диаграмма 
+
+![Моя Диаграмма](docs/diagrams/ER-diograma.jpg)
