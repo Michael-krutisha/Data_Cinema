@@ -43,4 +43,4 @@
 
 ## ER-Диаграмма 
 
-![Моя Диаграмма](docs/diagrams/ER-diograma.jpg)
+![Моя Диаграмма](docs/diagrams/ER-diogramma.jpg)
