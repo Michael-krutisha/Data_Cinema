@@ -26,7 +26,7 @@ entity "User" as user {
   * **user_id** : int (PK)
   --
   username : str
-  password : str
+  password_hash : str
   role : str
 }
 
@@ -36,7 +36,6 @@ entity "Sessions" as sessions {
   * **movie_id** : int (FK)
   * **hall_id** : int (FK)
   date_time : str
-  ticket_price : int
 }
 
 entity "Tickets" as tickets {
@@ -44,9 +43,10 @@ entity "Tickets" as tickets {
   --
   * **session_id** : int (FK)
   * **user_id** : int (FK)
+  ticket_price : int
   row_number : int
   seat_number : int
-  payment_status : str
+  payment_status : bool
 }
 
 ' Определение связей "Один ко Многим" (1:N)
