@@ -1,8 +1,3 @@
-
--- =====================================================================
--- 1. СОЗДАНИЕ НЕЗАВИСИМЫХ ТАБЛИЦ (Справочники и Пользователи)
--- =====================================================================
-
 -- Таблица пользователей (Зрители и Администраторы)
 CREATE TABLE users (
     user_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -11,7 +6,7 @@ CREATE TABLE users (
     role TEXT NOT NULL CHECK(role IN ('Администратор', 'Зритель')) DEFAULT 'Зритель'
 );
 
--- Таблица кинокартин (Репертуар)
+-- Таблица кинокартин
 CREATE TABLE movies (
     movie_id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL UNIQUE,
