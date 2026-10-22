@@ -19,7 +19,7 @@ rectangle "Диаграмма Use Case" {
     usecase "Вход в систему" as UC_AdminLogin
     usecase "Управление фильмами" as UC_ManageMovies
     usecase "Управление залами" as UC_ManageHalls
-    usecase "Формирование залами" as UC_FormHalls
+    usecase "Формирование залов" as UC_FormHalls
     usecase "Просмотр учета" as UC_ViewReports
 }
 
