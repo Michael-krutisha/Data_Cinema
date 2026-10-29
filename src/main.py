@@ -1,7 +1,8 @@
-
+# работа с самим питоном и для вывода русских символов
 import os
 import sys
 
+# чтобы в терминале выдавал русские символы
 if sys.platform == "win32":
     os.system("chcp 65001 > nul")
     sys.stdout.reconfigure(encoding="utf-8")
