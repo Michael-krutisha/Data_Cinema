@@ -4,7 +4,7 @@ from models.halls import Hall
 def _map(row) -> Hall:
     return Hall(*row)
 
-# Create — Добавление нового зала
+# Добавление нового зала
 def create(name: str, rows_count: int, seats_per_row: int):
     conn = get_connection()
     cur = conn.cursor()
@@ -15,7 +15,7 @@ def create(name: str, rows_count: int, seats_per_row: int):
     conn.commit()
     conn.close()
 
-# Read — Получение информации о конкретном зале (нужно для проверки рядов/мест)
+# Получение информации о конкретном зале (нужно для проверки рядов/мест)
 def get_by_id(hall_id: int) -> Hall | None:
     conn = get_connection()
     cur = conn.cursor()
