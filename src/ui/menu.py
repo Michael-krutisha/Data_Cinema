@@ -1,3 +1,5 @@
+# подключение проверки 
+# подключения репозитория с билетами 
 from services import auth_service, cinema_service
 from repositories import Tickets_repository
 
