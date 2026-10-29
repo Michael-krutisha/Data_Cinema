@@ -45,7 +45,7 @@ def register_menu():
             break
         except Exception as e:
             print(f"\nСообщение: {e}. Выберите другой.")
-
+# функция для того, какой путь в терминале будет показываться(например, можно добавить админа, у которого будет совсем другие выборы)
 def role_router(user):
     client_menu(user)
 
