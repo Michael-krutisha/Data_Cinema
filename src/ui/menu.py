@@ -86,7 +86,6 @@ def client_menu(user):
                     print("\n--- Оплата билета ---")
                     pay_choice = input("Введите '1' для успешной оплаты или '0' для отмены: ")
                     if pay_choice == "1":
-                        from repositories import Tickets_repository
                         Tickets_repository.create(session_id, user.user_id, 450, row, seat, True)
                         print("\nФиксация продажи и выдача электронного билета!")
                         break
