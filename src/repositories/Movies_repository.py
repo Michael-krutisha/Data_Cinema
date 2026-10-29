@@ -4,7 +4,7 @@ from models.movies import Movie
 def _map(row) -> Movie:
     return Movie(*row)
 
-# Create — Добавление фильма (Операция для Админа)
+# Добавление фильма (Операция для Админа, только он может делать изменения в фильмах и так далее)
 def create(title: str, genre: str, duration: int, age_rating: str):
     conn = get_connection()
     cur = conn.cursor()
@@ -15,7 +15,7 @@ def create(title: str, genre: str, duration: int, age_rating: str):
     conn.commit()
     conn.close()
 
-# Read — Получение всех фильмов
+# Получение всех фильмов
 def get_all() -> list[Movie]:
     conn = get_connection()
     cur = conn.cursor()
@@ -24,7 +24,7 @@ def get_all() -> list[Movie]:
     conn.close()
     return [_map(r) for r in rows]
 
-# Delete — Удаление фильма
+# Удаление фильма
 def delete(movie_id: int):
     conn = get_connection()
     cur = conn.cursor()

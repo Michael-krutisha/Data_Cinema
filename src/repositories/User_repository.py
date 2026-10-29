@@ -4,7 +4,7 @@ from models.user import User
 def _map(row) -> User:
     return User(*row)
 
-# Create (Создание пользователя / Регистрация)
+# Регистрация сохранить логин, хэш пароль и роль
 def create(username: str, password_hash: str, role: str):
     conn = get_connection()
     cur = conn.cursor()
@@ -15,7 +15,7 @@ def create(username: str, password_hash: str, role: str):
     conn.commit()
     conn.close()
 
-# Read (Получение пользователя по имени для авторизации)
+# Получение пользователя по имени для авторизации (проверока)
 def get_by_username(username: str) -> User | None:
     conn = get_connection()
     cur = conn.cursor()

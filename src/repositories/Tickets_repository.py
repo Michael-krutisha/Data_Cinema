@@ -1,7 +1,7 @@
 from database import get_connection
 from models.tickets import Ticket
 
-# Create (Покупка билета)
+# Покупка билета
 def create(session_id: int, user_id: int, price: int, row: int, seat: int, status: bool):
     conn = get_connection()
     cur = conn.cursor()
@@ -12,7 +12,7 @@ def create(session_id: int, user_id: int, price: int, row: int, seat: int, statu
     conn.commit()
     conn.close()
 
-# Read (Получение билетов конкретного пользователя с деталями сеанса и фильма)
+# Получение билетов конкретного пользователя с деталями сеанса и фильма
 def get_by_user(user_id: int) -> list[Ticket]:
     conn = get_connection()
     cur = conn.cursor()
@@ -28,7 +28,6 @@ def get_by_user(user_id: int) -> list[Ticket]:
     
     tickets = []
     for r in rows:
-        # Упаковываем основные поля в модель, а вычисляемые поля дописываем отдельно
         t = Ticket(r[0], r[1], r[2], r[3], r[4], r[5], bool(r[6]))
         t.movie_title = r[7]
         t.date_time = r[8]

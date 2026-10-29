@@ -1,6 +1,6 @@
 from database import get_connection
 from models.sessions import Session
-
+# Cоединяет таблицу сеансов с таблицами фильмов и залов.
 def get_all_with_details() -> list[Session]:
     conn = get_connection()
     cur = conn.cursor()
