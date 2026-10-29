@@ -1,9 +1,13 @@
+# 1 импортируем репозиторие, которые потребуются
+# 2 для записи в базу данных, то есть что записано в model
 from repositories import Sessions_repository, Tickets_repository, Halls_repository
 from database import get_connection
 
+# подключения репозитория с информаццией про фильмы 
 def get_available_sessions():
     return Sessions_repository.get_all_with_details()
 
+# проверка на занятость ряда и места( то есть выбранное место пользователя уже куплено или свободно)
 def get_taken_seats(session_id: int):
     conn = get_connection()
     cur = conn.cursor()
@@ -12,6 +16,7 @@ def get_taken_seats(session_id: int):
     conn.close()
     return rows
 
+# проверка на то сколько есть рядом и мест в ряду. есть ли вообще такой сеанс с id 
 def check_seat_available(session_id: int, row: int, seat: int) -> bool:
     conn = get_connection()
     cur = conn.cursor()
@@ -32,5 +37,6 @@ def check_seat_available(session_id: int, row: int, seat: int) -> bool:
     conn.close()
     return res is None
 
+# запись забронированного билета(вызываем репозиторий билетов, чтобы записать в базу данных)
 def fixate_ticket_sale(session_id: int, user_id: int, row: int, seat: int):
     Tickets_repository.create(session_id, user_id, 450, row, seat, True)
