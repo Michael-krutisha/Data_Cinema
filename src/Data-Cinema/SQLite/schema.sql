@@ -74,9 +74,9 @@ INSERT INTO Movies (title, genre, duration, age_rating) VALUES
 
 -- Заполняем пользователей (User)
 INSERT INTO User (username, password_hash, role) VALUES 
-('admin', 'hash_protected_123', 'administrator'),
+('admin', 'hash_protected_123', 'general'),
 ('ivan_ivanov', 'hash_user_qwerty', 'customer'),
-('maria_k', 'hash_user_abc', 'customer');
+('maria_k', 'hash_user_abc', 'burger');
 
 -- Заполняем сеансы (Sessions)
 -- Указываем ID созданных фильмов и залов
