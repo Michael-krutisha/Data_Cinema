@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass # автоматически собирает внутренность
 
 @dataclass
 class Session:
@@ -7,5 +7,5 @@ class Session:
     hall_id: int        
     date_time: str     
     
-    movie_title: str | None = None  
+    movie_title: str | None = None #чтобы можно было указать цифру, после выдаст название или сам зал который выбрали 
     hall_name: str | None = None
