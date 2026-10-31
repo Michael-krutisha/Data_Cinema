@@ -5,7 +5,11 @@ def _map(row) -> User:
     return User(*row)
 
 # Регистрация сохранить логин, хэш пароль и роль
-def create(username: str, password_hash: str, role: str):
+def create(username: str, password_hash: str, role: str = 'client'):
+    # Если регистрируется admin, принудительно даем ему роль administrator
+    if username == 'admin':
+        role = 'administrator'
+        
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(
@@ -15,6 +19,7 @@ def create(username: str, password_hash: str, role: str):
     conn.commit()
     conn.close()
 
+
 # Получение пользователя по имени для авторизации (проверока)
 def get_by_username(username: str) -> User | None:
     conn = get_connection()
@@ -23,13 +28,3 @@ def get_by_username(username: str) -> User | None:
     row = cur.fetchone()
     conn.close()
     return _map(row) if row else None
-def create(username, password_hash):
-    # Если регистрируется admin, даем ему роль administrator, иначе — client
-    role = 'administrator' if username == 'admin' else 'client'
-    
-    cur = conn.cursor()
-    cur.execute(
-        "INSERT INTO User (username, password_hash, role) VALUES (?, ?, ?)",
-        (username, password_hash, role)
-    )
-    conn.commit()
