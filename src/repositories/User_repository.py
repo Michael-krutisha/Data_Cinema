@@ -23,3 +23,13 @@ def get_by_username(username: str) -> User | None:
     row = cur.fetchone()
     conn.close()
     return _map(row) if row else None
+def create(username, password_hash):
+    # Если регистрируется admin, даем ему роль administrator, иначе — client
+    role = 'administrator' if username == 'admin' else 'client'
+    
+    cur = conn.cursor()
+    cur.execute(
+        "INSERT INTO User (username, password_hash, role) VALUES (?, ?, ?)",
+        (username, password_hash, role)
+    )
+    conn.commit()
