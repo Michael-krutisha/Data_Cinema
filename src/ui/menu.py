@@ -60,12 +60,12 @@ def role_router(user):
 
 # меню админа
 def admin_menu(user):
-    # Импортируем репозитории для взаимодействия с БД
+    # Импортируем репозитории для взаимодействия с базой данных и перемеиновываем их удобнее 
     import repositories.Movies_repository as movies_repo
     import repositories.Sessions_repository as sessions_repo
     import repositories.Halls_repository as halls_repo
     import repositories.Tickets_repository as tickets_repo
-
+    # Создаем бесконечный цикл чтобы в программе выбралось одно из пяти действий
     while True:
         print(f"\n--- Меню Администратора: {user.username if hasattr(user, 'username') else user} ---")
         print("1. Управление фильмами")
@@ -76,7 +76,7 @@ def admin_menu(user):
         
         choice = input("Действие: ")
         
-        # 1. УПРАВЛЕНИЕ ФИЛЬМАМИ
+        # 1. управление фильмами
         if choice == "1":
             print("\n--- Управление фильмами ---")
             print("1. Посмотреть список фильмов")
@@ -88,7 +88,7 @@ def admin_menu(user):
                 movies = movies_repo.get_all()
                 print("\nСписок доступных фильмов:")
                 for m in movies:
-                    # m — это объект класса Movie (из твоих моделей)
+                    # m — это объект класса Movie (из модели)
                     print(f"[{m.movie_id}] {m.title} | Жанр: {m.genre} | {m.duration} мин. | Возраст: {m.age_rating}")
             
             elif sub_choice == "2":
@@ -104,7 +104,7 @@ def admin_menu(user):
                 movies_repo.delete(movie_id)
                 print(f"\n[Успех] Фильм с ID {movie_id} удален!")
 
-        # 2. УПРАВЛЕНИЕ СЕАНСАМИ
+        # 2. управление сеансами 
         elif choice == "2":
             print("\n--- Управление сеансами ---")
             print("1. Посмотреть расписание сеансов")
@@ -119,7 +119,7 @@ def admin_menu(user):
                     print(f"ID сеанса: {s.session_id} | Фильм: {s.movie_title} | Зал: {s.hall_name} | Время: {s.date_time}")
             
             elif sub_choice == "2":
-                # Сначала покажем ID фильмов и залов, чтобы админ не угадывал
+                # выводим сначала фильмы, которые есть, чтобы было удобнее 
                 print("\nДоступные фильмы (ID):")
                 for m in movies_repo.get_all():
                     print(f"  ID {m.movie_id}: {m.title}")
@@ -139,7 +139,7 @@ def admin_menu(user):
                 sessions_repo.delete(session_id)
                 print(f"\n[Успех] Сеанс №{session_id} успешно отменен.")
 
-        # 3. УПРАВЛЕНИЕ ЗАЛАМИ
+        # 3. управление залами
         elif choice == "3":
             print("\n--- Управление залами ---")
             print("1. Посмотреть список залов")
@@ -159,7 +159,7 @@ def admin_menu(user):
                 halls_repo.create(name, rows_count, seats_per_row)
                 print(f"\n[Успех] Зал '{name}' успешно сконфигурирован!")
 
-        # 4. ПРОСМОТР УЧЕТА (СТАТИСТИКА)
+        # 4. просмотр учета продажи билетов 
         elif choice == "4":
             stats = tickets_repo.get_sales_statistics()
             print("\n========================================")
@@ -170,7 +170,7 @@ def admin_menu(user):
             print("========================================")
             input("\nНажмите Enter, чтобы вернуться в меню...")
 
-        # 0. ВЫХОД
+        # выход из системы
         elif choice == "0":
             print("Выход из панели администратора...")
             break
