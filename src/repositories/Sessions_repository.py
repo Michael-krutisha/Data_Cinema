@@ -20,6 +20,7 @@ def get_all_with_details() -> list[Session]:
         s.hall_name = r[5]
         sessions.append(s)
     return sessions
+# Позволяет администратору поставить конкретный фильм в конкретный зал на определенное время(то есть поставить новый сеанс).
 def create(movie_id: int, hall_id: int, date_time: str) -> None:
     conn = get_connection()
     cur = conn.cursor()
@@ -29,7 +30,7 @@ def create(movie_id: int, hall_id: int, date_time: str) -> None:
     """, (movie_id, hall_id, date_time))
     conn.commit()
     conn.close()
-
+# администратору чтобы можно было снять сеанс
 def delete(session_id: int) -> None:
     conn = get_connection()
     cur = conn.cursor()

@@ -23,7 +23,7 @@ def get_by_id(hall_id: int) -> Hall | None:
     row = cur.fetchone()
     conn.close()
     return _map(row) if row else None
-
+# возвращает массив всех залов, который есть в кинотеатре
 def get_all() -> list[Hall]:
     conn = get_connection()
     cur = conn.cursor()
