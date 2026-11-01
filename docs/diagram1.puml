@@ -18,7 +18,7 @@ rectangle "Диаграмма Use Case" {
     ' Прецеденты Администратора
     usecase "Вход в систему" as UC_AdminLogin
     usecase "Управление фильмами" as UC_ManageMovies
-    usecase "Управление залами" as UC_ManageHalls
+    usecase "Управление сеансами" as UC_ManageHalls
     usecase "Формирование залов" as UC_FormHalls
     usecase "Просмотр учета" as UC_ViewReports
 }
