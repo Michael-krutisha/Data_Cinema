@@ -31,3 +31,12 @@ def get_all() -> list[Hall]:
     rows = cur.fetchall()
     conn.close()
     return [_map(r) for r in rows]
+# удаление зала 
+def delete(hall_id: int) -> None:
+    conn = get_connection()
+    cur = conn.cursor()
+    # Удаляем зал по его уникальному ID
+    cur.execute("DELETE FROM Halls WHERE hall_id = ?", (hall_id,))
+    conn.commit()
+    conn.close()
+
