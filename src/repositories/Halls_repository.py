@@ -23,3 +23,11 @@ def get_by_id(hall_id: int) -> Hall | None:
     row = cur.fetchone()
     conn.close()
     return _map(row) if row else None
+
+def get_all() -> list[Hall]:
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT hall_id, name, rows_count, seats_per_row FROM Halls")
+    rows = cur.fetchall()
+    conn.close()
+    return [_map(r) for r in rows]

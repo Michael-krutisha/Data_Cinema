@@ -20,3 +20,19 @@ def get_all_with_details() -> list[Session]:
         s.hall_name = r[5]
         sessions.append(s)
     return sessions
+def create(movie_id: int, hall_id: int, date_time: str) -> None:
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        INSERT INTO Sessions (movie_id, hall_id, date_time) 
+        VALUES (?, ?, ?)
+    """, (movie_id, hall_id, date_time))
+    conn.commit()
+    conn.close()
+
+def delete(session_id: int) -> None:
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM Sessions WHERE session_id = ?", (session_id,))
+    conn.commit()
+    conn.close()

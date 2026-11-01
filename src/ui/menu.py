@@ -60,23 +60,124 @@ def role_router(user):
 
 # меню админа
 def admin_menu(user):
-    while True:
-        print(f"\n--- Меню Администратора: {user.username} ---")
-        print("1. Добавить новый сеанс")
-        print("2. Посмотреть статистику продаж")
-        print("3. Удалить/Редактировать сеанс")
-        print("0. Выйти")
-        choice = input("Действие: ")
+    # Импортируем репозитории для взаимодействия с БД
+    import repositories.Movies_repository as movies_repo
+    import repositories.Sessions_repository as sessions_repo
+    import repositories.Halls_repository as halls_repo
+    import repositories.Tickets_repository as tickets_repo
 
+    while True:
+        print(f"\n--- Меню Администратора: {user.username if hasattr(user, 'username') else user} ---")
+        print("1. Управление фильмами")
+        print("2. Управление сеансами")
+        print("3. Управление залами")
+        print("4. Просмотр учета (Статистика продаж)")
+        print("0. Выйти")
+        
+        choice = input("Действие: ")
+        
+        # 1. УПРАВЛЕНИЕ ФИЛЬМАМИ
         if choice == "1":
-            print("\n[Админ] Тут будет логика добавления сеанса...")
-            # Например: cinema_service.add_session(...)
+            print("\n--- Управление фильмами ---")
+            print("1. Посмотреть список фильмов")
+            print("2. Добавить новый фильм")
+            print("3. Удалить фильм")
+            sub_choice = input("Действие: ")
+            
+            if sub_choice == "1":
+                movies = movies_repo.get_all()
+                print("\nСписок доступных фильмов:")
+                for m in movies:
+                    # m — это объект класса Movie (из твоих моделей)
+                    print(f"[{m.movie_id}] {m.title} | Жанр: {m.genre} | {m.duration} мин. | Возраст: {m.age_rating}")
+            
+            elif sub_choice == "2":
+                title = input("Название фильма: ")
+                genre = input("Жанр: ")
+                duration = int(input("Длительность (мин): "))
+                age_rating = input("Возрастной рейтинг (например, 16+): ")
+                movies_repo.create(title, genre, duration, age_rating)
+                print(f"\n[Успех] Фильм '{title}' добавлен в базу!")
+                
+            elif sub_choice == "3":
+                movie_id = int(input("Введите ID фильма для удаления: "))
+                movies_repo.delete(movie_id)
+                print(f"\n[Успех] Фильм с ID {movie_id} удален!")
+
+        # 2. УПРАВЛЕНИЕ СЕАНСАМИ
         elif choice == "2":
-            print("\n[Админ] Тут будет вывод проданных билетов...")
+            print("\n--- Управление сеансами ---")
+            print("1. Посмотреть расписание сеансов")
+            print("2. Добавить новый сеанс")
+            print("3. Удалить сеанс")
+            sub_choice = input("Действие: ")
+            
+            if sub_choice == "1":
+                sessions = sessions_repo.get_all_with_details()
+                print("\nРасписание сеансов:")
+                for s in sessions:
+                    print(f"ID сеанса: {s.session_id} | Фильм: {s.movie_title} | Зал: {s.hall_name} | Время: {s.date_time}")
+            
+            elif sub_choice == "2":
+                # Сначала покажем ID фильмов и залов, чтобы админ не угадывал
+                print("\nДоступные фильмы (ID):")
+                for m in movies_repo.get_all():
+                    print(f"  ID {m.movie_id}: {m.title}")
+                print("Доступные залы (ID):")
+                for h in halls_repo.get_all():
+                    print(f"  ID {h.hall_id}: {h.name}")
+                
+                movie_id = int(input("\nВведите ID фильма: "))
+                hall_id = int(input("Введите ID зала: "))
+                date_time = input("Введите дату и время (например, 2026-11-01 18:00): ")
+                
+                sessions_repo.create(movie_id, hall_id, date_time)
+                print("\n[Успех] Сеанс успешно добавлен!")
+                
+            elif sub_choice == "3":
+                session_id = int(input("Введите ID сеанса для удаления: "))
+                sessions_repo.delete(session_id)
+                print(f"\n[Успех] Сеанс №{session_id} успешно отменен.")
+
+        # 3. УПРАВЛЕНИЕ ЗАЛАМИ
         elif choice == "3":
-            print("\n[Админ] Тут будет удаление сеансов...")
+            print("\n--- Управление залами ---")
+            print("1. Посмотреть список залов")
+            print("2. Сформировать новый зал")
+            sub_choice = input("Действие: ")
+            
+            if sub_choice == "1":
+                halls = halls_repo.get_all()
+                print("\nСписок залов кинотеатра:")
+                for h in halls:
+                    print(f"[{h.hall_id}] Зал: {h.name} | Рядов: {h.rows_count} | Мест в ряду: {h.seats_per_row}")
+            
+            elif sub_choice == "2":
+                name = input("Название или номер зала (например, 'Зал 1' или 'VIP'): ")
+                rows_count = int(input("Количество рядов: "))
+                seats_per_row = int(input("Количество мест в одном ряду: "))
+                halls_repo.create(name, rows_count, seats_per_row)
+                print(f"\n[Успех] Зал '{name}' успешно сконфигурирован!")
+
+        # 4. ПРОСМОТР УЧЕТА (СТАТИСТИКА)
+        elif choice == "4":
+            stats = tickets_repo.get_sales_statistics()
+            print("\n========================================")
+            print("       ОТЧЕТ ПО УЧЕТУ И ПРОДАЖАМ        ")
+            print("========================================")
+            print(f" Всего проданных билетов: {stats['total_tickets']} шт.")
+            print(f" Общая выручка системы:   {stats['total_revenue']} руб.")
+            print("========================================")
+            input("\nНажмите Enter, чтобы вернуться в меню...")
+
+        # 0. ВЫХОД
         elif choice == "0":
+            print("Выход из панели администратора...")
             break
+        else:
+            print("Ошибка: выбран неверный пункт меню. Попробуйте еще раз.")
+
+
 
 # если пользователь зашел, то спрашивает посмотреть афишу или посмотреть билеты которые уже куплены. Далее если афиша, то выбор сеанса(какой именно фильм и какой время и какое ограниченние по возрасту)
 # далее когда выбрали сеанс, то автоматически переносимся в зал в котором проходи фильм. В нем выбираем ряд и место. Проверка на занятость.

@@ -33,3 +33,20 @@ def get_by_user(user_id: int) -> list[Ticket]:
         t.date_time = r[8]
         tickets.append(t)
     return tickets
+
+def get_sales_statistics() -> dict:
+    conn = get_connection()
+    cur = conn.cursor()
+    # Считаем общее количество проданных билетов и сумму выручки
+    cur.execute("SELECT COUNT(*), SUM(ticket_price) FROM Tickets")
+    row = cur.fetchone()
+    conn.close()
+    
+    total_tickets = row[0] if row[0] else 0
+    total_revenue = row[1] if row[1] else 0
+    
+    return {
+        "total_tickets": total_tickets,
+        "total_revenue": total_revenue
+    }
+
