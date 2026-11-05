@@ -33,6 +33,7 @@ def get_by_user(user_id: int) -> list[Ticket]:
         t.date_time = r[8]
         tickets.append(t)
     return tickets
+
 # собирает информацию со всех user об их продажи или не продажи билетов
 def get_sales_statistics() -> dict:
     conn = get_connection()

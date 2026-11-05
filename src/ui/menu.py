@@ -139,7 +139,7 @@ def admin_menu(user):
                 sessions_repo.delete(session_id)
                 print(f"\n[Успех] Сеанс №{session_id} успешно отменен.")
 
-        # 3. управление залами
+
                 # 3. УПРАВЛЕНИЕ ЗАЛАМИ
         elif choice == "3":
             print("\n--- Управление залами ---")

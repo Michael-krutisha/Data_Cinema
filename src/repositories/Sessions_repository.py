@@ -1,5 +1,6 @@
 from database import get_connection
 from models.sessions import Session
+
 # Cоединяет таблицу сеансов с таблицами фильмов и залов.
 def get_all_with_details() -> list[Session]:
     conn = get_connection()
@@ -20,6 +21,7 @@ def get_all_with_details() -> list[Session]:
         s.hall_name = r[5]
         sessions.append(s)
     return sessions
+
 # Позволяет администратору поставить конкретный фильм в конкретный зал на определенное время(то есть поставить новый сеанс).
 def create(movie_id: int, hall_id: int, date_time: str) -> None:
     conn = get_connection()
@@ -30,6 +32,7 @@ def create(movie_id: int, hall_id: int, date_time: str) -> None:
     """, (movie_id, hall_id, date_time))
     conn.commit()
     conn.close()
+    
 # администратору чтобы можно было снять сеанс
 def delete(session_id: int) -> None:
     conn = get_connection()
