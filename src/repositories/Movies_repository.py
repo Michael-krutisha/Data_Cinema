@@ -1,4 +1,4 @@
-from database import get_connection
+from src.Data_Cinema.SQLite.database import get_connection
 from models.movies import Movie
 
 def _map(row) -> Movie:

@@ -1,4 +1,4 @@
-from database import get_connection
+from src.Data_Cinema.SQLite.database import get_connection
 from models.halls import Hall
 # База данных возвращает строку таблицы в виде обычного кортежа (списка значений)
 def _map(row) -> Hall:

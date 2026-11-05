@@ -1,4 +1,4 @@
-from database import get_connection
+from src.Data_Cinema.SQLite.database import get_connection
 from models.tickets import Ticket
 
 # Покупка билета для пользевателя

@@ -1,7 +1,7 @@
 # 1 импортируем репозиторие, которые потребуются
 # 2 для записи в базу данных, то есть что записано в model
 from repositories import Sessions_repository, Tickets_repository, Halls_repository
-from database import get_connection
+from src.Data_Cinema.SQLite.database import get_connection
 
 # подключения репозитория с информаццией про фильмы 
 def get_available_sessions():

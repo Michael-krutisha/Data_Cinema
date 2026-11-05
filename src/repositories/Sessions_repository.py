@@ -1,4 +1,4 @@
-from database import get_connection
+from src.Data_Cinema.SQLite.database import get_connection
 from models.sessions import Session
 
 # Cоединяет таблицу сеансов с таблицами фильмов и залов.
