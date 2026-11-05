@@ -15,7 +15,7 @@ def create(title: str, genre: str, duration: int, age_rating: str):
     conn.commit()
     conn.close()
 
-# Получение всех фильмов
+# Получение всех фильмов которые есть 
 def get_all() -> list[Movie]:
     conn = get_connection()
     cur = conn.cursor()
@@ -24,7 +24,7 @@ def get_all() -> list[Movie]:
     conn.close()
     return [_map(r) for r in rows]
 
-# Удаление фильма
+# Удаление фильма 
 def delete(movie_id: int):
     conn = get_connection()
     cur = conn.cursor()

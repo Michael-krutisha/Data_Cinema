@@ -4,9 +4,9 @@ from models.user import User
 def _map(row) -> User:
     return User(*row)
 
-# Регистрация сохранить логин, хэш пароль и роль
+# Регистрация сохранить логин, хэш пароль и роль(покупатель и администратор)
 def create(username: str, password_hash: str, role: str = 'client'):
-    # Если регистрируется admin, принудительно даем ему роль administrator
+    # Если регистрируется admin(логин), принудительно даем ему роль administrator
     if username == 'admin':
         role = 'administrator'
         
@@ -20,7 +20,7 @@ def create(username: str, password_hash: str, role: str = 'client'):
     conn.close()
 
 
-# Получение пользователя по имени для авторизации (проверока)
+# Получение пользователя по имени для авторизации (проверка), если такой или нет
 def get_by_username(username: str) -> User | None:
     conn = get_connection()
     cur = conn.cursor()

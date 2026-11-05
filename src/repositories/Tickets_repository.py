@@ -1,7 +1,7 @@
 from database import get_connection
 from models.tickets import Ticket
 
-# Покупка билета
+# Покупка билета для пользевателя
 def create(session_id: int, user_id: int, price: int, row: int, seat: int, status: bool):
     conn = get_connection()
     cur = conn.cursor()
@@ -33,7 +33,7 @@ def get_by_user(user_id: int) -> list[Ticket]:
         t.date_time = r[8]
         tickets.append(t)
     return tickets
-# собирает информацию со всех user 
+# собирает информацию со всех user об их продажи или не продажи билетов
 def get_sales_statistics() -> dict:
     conn = get_connection()
     cur = conn.cursor()
