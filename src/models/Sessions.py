@@ -9,3 +9,5 @@ class Session:
     
     movie_title: str | None = None #чтобы можно было указать цифру, после выдаст название или сам зал который выбрали 
     hall_name: str | None = None
+    rows_count: int | None = None
+    seats_per_row: int | None = None

@@ -76,21 +76,20 @@ def admin_menu(user):
         
         choice = input("Действие: ")
         
-        # 1. управление фильмами
+         # # 1. управление фильмами
         if choice == "1":
             print("\n--- Управление фильмами ---")
             print("1. Посмотреть список фильмов")
             print("2. Добавить новый фильм")
             print("3. Удалить фильм")
             sub_choice = input("Действие: ")
-            
+
             if sub_choice == "1":
                 movies = movies_repo.get_all()
                 print("\nСписок доступных фильмов:")
                 for m in movies:
-                    # m — это объект класса Movie (из модели)
                     print(f"[{m.movie_id}] {m.title} | Жанр: {m.genre} | {m.duration} мин. | Возраст: {m.age_rating}")
-            
+
             elif sub_choice == "2":
                 title = input("Название фильма: ")
                 genre = input("Жанр: ")
@@ -98,9 +97,15 @@ def admin_menu(user):
                 age_rating = input("Возрастной рейтинг (например, 16+): ")
                 movies_repo.create(title, genre, duration, age_rating)
                 print(f"\n[Успех] Фильм '{title}' добавлен в базу!")
-                
+
             elif sub_choice == "3":
-                movie_id = int(input("Введите ID фильма для удаления: "))
+                # СЮДА МЫ ДОБАВИЛИ ВЫВОД ФИЛЬМОВ ПЕРЕД УДАЛЕНИЕМ:
+                movies = movies_repo.get_all()
+                print("\n=== Список фильмов в базе ===")
+                for m in movies:
+                    print(f"ID {m.movie_id}: '{m.title}'")
+                
+                movie_id = int(input("\nВведите ID фильма для удаления: "))
                 movies_repo.delete(movie_id)
                 print(f"\n[Успех] Фильм с ID {movie_id} удален!")
 
@@ -135,9 +140,29 @@ def admin_menu(user):
                 print("\n[Успех] Сеанс успешно добавлен!")
                 
             elif sub_choice == "3":
-                session_id = int(input("Введите ID сеанса для удаления: "))
-                sessions_repo.delete(session_id)
-                print(f"\n[Успех] Сеанс №{session_id} успешно отменен.")
+                # Получаем все сеансы с названиями фильмов и залов из базы
+                sessions = sessions_repo.get_all_with_details()
+                
+                if not sessions:
+                    print("\n[Инфо] В расписании пока нет сеансов для удаления.")
+                else:
+                    print("\n=== Список активных сеансов ===")
+                    for s in sessions:
+                        print(f"ID сеанса: {s.session_id} | Фильм: '{s.movie_title}' | Зал: {s.hall_name} | Время: {s.date_time}")
+                    
+                    try:
+                        session_id = int(input("\nВведите ID сеанса для удаления: "))
+                        
+                        # Небольшая проверка: существует ли такой ID сеанса в списке
+                        existing_ids = [s.session_id for s in sessions]
+                        if session_id not in existing_ids:
+                            print(f"\n[Ошибка] Сеанс с ID {session_id} не найден в списке!")
+                        else:
+                            sessions_repo.delete(session_id)
+                            print(f"\n[Успех] Сеанс №{session_id} успешно отменен и удален!")
+                            
+                    except ValueError:
+                        print("\n[Ошибка] Некорректный ввод! ID сеанса должен быть числом.")
 
 
                 # 3. УПРАВЛЕНИЕ ЗАЛАМИ
@@ -204,12 +229,18 @@ def client_menu(user):
         
         if choice == "1":
             sessions = cinema_service.get_available_sessions()
-            for s in sessions:
-                print(f"Сеанс №{s.session_id} | Фильм: {s.movie_title} | Время: {s.date_time}")
-            
             if not sessions:
                 print("Сеансов пока нет.")
                 continue
+                
+            print("\n=== Доступные сеансы ===")
+            for s in sessions:
+                # Красиво пишем название фильма, зал, время и его вместимость
+                print(
+                    f"Сеанс №{s.session_id} | Фильм: '{s.movie_title}'\n"
+                    f"  Зал: {s.hall_name} (Рядов: {s.rows_count}, Мест в ряду: {s.seats_per_row}) | Время: {s.date_time}\n"
+                    f"  --------------------------------------------------"
+                )
                 
             try:
                 session_id = int(input("\nВведите ID выбранного сеанса: "))
