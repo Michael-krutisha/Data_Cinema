@@ -56,3 +56,10 @@ def delete(session_id: int) -> None:
     conn.commit()
     conn.close()
 
+def get_by_id(session_id: int) -> Session | None:
+    with get_connection() as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT session_id, movie_id, hall_id, date_time FROM Sessions WHERE session_id = ?", (session_id,))
+        row = cur.fetchone()
+        return Session(*row) if row else None
+

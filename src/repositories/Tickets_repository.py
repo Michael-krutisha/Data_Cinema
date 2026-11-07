@@ -51,3 +51,17 @@ def get_sales_statistics() -> dict:
         "total_revenue": total_revenue
     }
 
+def get_taken_seats(session_id: int) -> list[tuple]:
+    with get_connection() as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT row_number, seat_number FROM Tickets WHERE session_id = ?", (session_id,))
+        return cur.fetchall()
+
+def is_seat_taken(session_id: int, row: int, seat: int) -> bool:
+    with get_connection() as conn:
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT 1 FROM Tickets WHERE session_id = ? AND row_number = ? AND seat_number = ?",
+            (session_id, row, seat)
+        )
+        return cur.fetchone() is not None
