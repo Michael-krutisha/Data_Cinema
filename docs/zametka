@@ -1,2 +1,2 @@
-& "C:\msys64\ucrt64\bin\python.exe" src/main.py
+& "C:\msys64\ucrt64\bin\python.exe" -m src.main
 & "C:\msys64\ucrt64\bin\python.exe" src/Data-Cinema/SQLite/db_connect.py

@@ -40,3 +40,4 @@ def delete(session_id: int) -> None:
     cur.execute("DELETE FROM Sessions WHERE session_id = ?", (session_id,))
     conn.commit()
     conn.close()
+
